@@ -6,13 +6,8 @@ import 'package:travelapp/screens/home/state/home_state.dart';
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeInitialState());
 
-  void changelang({required String v, required BuildContext context}) {
-    if (v == 'uz') {
-      context. locale = const Locale('uz', 'UZ');
-      emit(HomeInitialState());
-    } else if (v == 'en') {
-      context.locale = const Locale('en', 'EN');
-      emit(HomeInitialState());
-    }
-  }
+
+  
+
+  
 }

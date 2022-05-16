@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
       locale: context.locale,
       theme: ThemeData.light(),
       onGenerateRoute: myRoutes.onGenerateRoute,
-      initialRoute: '/homeview',
+      initialRoute: '/splashscreen',
     );
   }
 }

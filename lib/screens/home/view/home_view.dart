@@ -1,96 +1,123 @@
 import 'package:flutter/material.dart';
 import 'package:travelapp/core/constants/color_const.dart';
 import 'package:travelapp/core/constants/radius_const.dart';
+import 'package:travelapp/core/constants/size_const.dart';
 import 'package:travelapp/core/extensions/context_extension.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:on_click/on_click.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:travelapp/screens/home/view/home_Main.dart';
+import 'package:travelapp/screens/profile/profile_state/profile_view.dart';
+import 'package:travelapp/screens/reversations/reservation_view/reservation_view.dart';
+import 'package:travelapp/screens/saved/saved_view/saved_view.dart';
 
-class HomeView extends StatelessWidget {
-  const HomeView({Key? key}) : super(key: key);
+class HomeView extends StatefulWidget {
+  HomeView({Key? key}) : super(key: key);
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  PageController controller = PageController();
+  int currentindex = 0;
+  List<Widget> pages = [
+    HomeMainView(),
+    const ReservationView(),
+    const SavedView(),
+   const ProfileView(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.transparent,
-        height: context.h,
+      body: pages[currentindex],
+      bottomNavigationBar: Container(
+        height: context.h * 0.07,
         width: context.h,
-        child: Stack(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(RadiusConst.large),
+            topRight: Radius.circular(RadiusConst.large),
+          ),
+          color: ColorConst.splashtextcolor,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Positioned(
-              child: Container(
-                height: context.h * 0.4,
-                width: context.h,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      top: context.h * 0.042,
-                      left: context.h * 0.032,
-                      child: CircleAvatar(
-                        radius: 33.0,
-                        backgroundImage: CachedNetworkImageProvider(
-                          'https://images.unsplash.com/photo-1520341280432-4749d4d7bcf9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      top: context.h * 0.05,
-                      right: context.h * 0.032,
-                      child: Container(
-                              height: context.h * 0.055,
-                              width: context.h * 0.055,
-                              decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.2),
-                                  borderRadius:
-                                      BorderRadius.circular(RadiusConst.small)),
-                              child: Image.asset('assets/images/Category.png'))
-                          .onClick(() {
-                        debugPrint("salom");
-                      }),
-                    ),
-                  ],
+            Expanded(
+              child: bars(
+                label: 'explore',
+                iconData: Icon(
+                  Icons.search_rounded,
+                  color: currentindex == 0
+                      ? ColorConst.kPrimaryColor
+                      : ColorConst.textColor,
                 ),
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage('assets/images/home.png'),
-                  ),
-                ),
+                index: 0,
               ),
             ),
+            Expanded(
+              child: bars(
+                label: 'reservation',
+                iconData: Icon(
+                  Icons.calendar_month_outlined,
+                  color: currentindex == 1
+                      ? ColorConst.kPrimaryColor
+                      : ColorConst.textColor,
+                ),
+                index: 1,
+              ),
+            ),
+            Expanded(
+              child: bars(
+                label: 'saved',
+                iconData: Icon(
+                  Icons.bookmark_border_outlined,
+                  color: currentindex == 2
+                      ? ColorConst.kPrimaryColor
+                      : ColorConst.textColor,
+                ),
+                index: 2,
+              ),
+            ),
+            Expanded(
+              child: bars(
+                label: 'profile',
+                iconData: Icon(
+                  Icons.person_outline_rounded,
+                  color: currentindex == 3
+                      ? ColorConst.kPrimaryColor
+                      : ColorConst.textColor,
+                ),
+                index: 3,
+              ),
+            )
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: ColorConst.splashtextcolor,
-        unselectedIconTheme: IconThemeData(color: ColorConst.textColor),
-        selectedIconTheme: IconThemeData(color: ColorConst.kPrimaryColor),
-        selectedItemColor: ColorConst.kPrimaryColor,
-        selectedLabelStyle: TextStyle(color: ColorConst.kPrimaryColor),
-        unselectedLabelStyle: TextStyle(color: ColorConst.textColor),
-        items: [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.search),
-          label: 'explore'.tr(),
-          
-
-        ),
-        BottomNavigationBarItem(
-            icon: Icon(
-              Icons.calendar_month_outlined,
-            ),
-            label: 'reservation'.tr()),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.bookmark_border),
-          label: 'saved'.tr(),
-          
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person_outline_rounded),
-          label: 'profile'.tr(),
-        ),
-      ]),
     );
+  }
+
+  Widget bars(
+      {required String label, required Icon iconData, required int index}) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        iconData,
+        Text(
+          label.tr(),
+          style: TextStyle(
+            color: currentindex == index
+                ? ColorConst.kPrimaryColor
+                : ColorConst.textColor,
+            fontSize: 12,
+          ),
+        ),
+      ],
+    ).onClick(() {
+      currentindex = index;
+      setState(() {});
+    });
   }
 }
