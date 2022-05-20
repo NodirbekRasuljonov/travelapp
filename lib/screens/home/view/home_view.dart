@@ -31,6 +31,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: pages[currentindex],
       bottomNavigationBar: Container(
         height: context.h * 0.07,

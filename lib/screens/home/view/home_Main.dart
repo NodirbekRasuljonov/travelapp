@@ -115,9 +115,10 @@ class _HomeMainViewState extends State<HomeMainView> {
               child: Text(
                 'find'.tr(),
                 style: TextStyle(
-                    color: ColorConst.textColor,
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.w500),
+                  color: ColorConst.textColor,
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
           ),
@@ -133,6 +134,14 @@ class _HomeMainViewState extends State<HomeMainView> {
                 decoration: InputDecoration(
                   fillColor: Color(0xffEEF0F2),
                   filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(RadiusConst.small),
+                      bottomLeft: Radius.circular(
+                        RadiusConst.small,
+                      ),
+                    ),
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(RadiusConst.small),
@@ -161,13 +170,46 @@ class _HomeMainViewState extends State<HomeMainView> {
                   ),
                 ),
                 color: ColorConst.kPrimaryColor,
-
               ),
               // child: SvgPicture.asset('assets/svg/Filter.svg'),
-              child: Icon(Icons.tune,color: Colors.white,),
+              child: Icon(
+                Icons.tune,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          Positioned(
+            top: context.h * 0.419,
+            left: context.h * 0.02,
+            right: context.h * 0.338,
+            child: buttons(context: context, text: 'places').onClick(
+              () {},
+            ),
+          ),
+          Positioned(
+            top: context.h*0.454,
+            left: 0.0,
+            right: 0.0,
+            bottom: context.h*0.2,
+            child: Container(
+              height: context.h * 0.208,
+              width: context.h * 0.290,
+              color: Colors.red,
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Container buttons({required BuildContext context, required String text}) {
+    return Container(
+      alignment: Alignment.center,
+      height: context.h * 0.018,
+      width: context.h * 0.115,
+      child: Text(
+        text.tr(),
+        style: TextStyle(color: ColorConst.splashtextcolor),
       ),
     );
   }

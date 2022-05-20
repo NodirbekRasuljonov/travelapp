@@ -25,6 +25,8 @@ void main(List<String> args) async {
         Locale('en', 'EN'),
         Locale('es', 'ES'),
       ],
+      saveLocale: true,
+      startLocale: Locale('en','EN'),
       fallbackLocale: Locale('en', 'EN'),
       path: "assets/lang",
     ),
